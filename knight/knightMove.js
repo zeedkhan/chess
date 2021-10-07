@@ -1,3 +1,5 @@
+import { chessBoard } from "../board/board.js";
+
 /**
  * @param  {string} [position] ex: a3, b3 in chess move
  * @return  {number} of valid available moves
@@ -6,25 +8,31 @@
  *
  */
 
-export function knightMove(pos) {
-    // Generate 2d array for dynamic programming
-    var board = Array.from({ length: 8 }).map(_ => Array.from({ length: 8 }).fill(null));
 
+/* COMMENT CODE USING FOR VISUALIZE */
+export function knightMove(pos) {
     // index of row and column in chess board
-    var alphabet = 'abcdefgh';
-    
+    const alphabet = 'abcdefgh';
+
+    /*   COMMENT FOR 2D visual     */
+    // 1. Generate 2d array for dynamic programming;
+    // const board = chessBoard();
+
     // get first string represent as column in board
-    var column = alphabet.indexOf(pos.charAt(0));
+    // const column = alphabet.indexOf(pos.charAt(0));
+
     // substract 1 for current to computr language
-    var currRow = pos.charAt(1) - 1;
+    // const currRow = pos.charAt(1) - 1;
+
+    // remark the board with some char
+    // board[currRow][column] = 'h';
+    /* END VISUAL */
 
     // current position of knight in the board
-    var metrixPos = [[pos.charAt(1) - 1], [alphabet.indexOf(pos.charAt(0))]];
-    // remark the board with some char
-    board[currRow][column] = 'h';
+    const metrixPos = [[pos.charAt(1) - 1], [alphabet.indexOf(pos.charAt(0))]];
 
     // generate empty []
-    var result = []
+    const result = []
 
     // possibility that horse can do in chess, you may think like X or Y
     const x = [2, 1, -1, -2, -2, -1, 1, 2]
@@ -35,11 +43,13 @@ export function knightMove(pos) {
             metrixPos[0][0] + x[i] >= 0 &&
             metrixPos[1][0] + y[i] <= 7 &&
             metrixPos[1][0] + y[i] >= 0) {
-            board[currRow + x[i]][column + y[i]] = `${i}`
+
+            // board[currRow + x[i]][column + y[i]] = `${i}` /* visual */
             result.push([x[i], y[i]])
         }
     }
+
     // see board
-    // console.table(board);
+    // console.table(board); /* visual */
     return result.length
 }

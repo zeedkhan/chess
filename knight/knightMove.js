@@ -1,0 +1,45 @@
+/**
+ * @param  {string} [position] ex: a3, b3 in chess move
+ * @return  {number} of valid available moves
+ *
+ * Using dynamic programming to handle the board for curren and valid position of knight/horse
+ *
+ */
+
+export function knightMove(pos) {
+    // Generate 2d array for dynamic programming
+    var board = Array.from({ length: 8 }).map(_ => Array.from({ length: 8 }).fill(null));
+
+    // index of row and column in chess board
+    var alphabet = 'abcdefgh';
+    
+    // get first string represent as column in board
+    var column = alphabet.indexOf(pos.charAt(0));
+    // substract 1 for current to computr language
+    var currRow = pos.charAt(1) - 1;
+
+    // current position of knight in the board
+    var metrixPos = [[pos.charAt(1) - 1], [alphabet.indexOf(pos.charAt(0))]];
+    // remark the board with some char
+    board[currRow][column] = 'h';
+
+    // generate empty []
+    var result = []
+
+    // possibility that horse can do in chess, you may think like X or Y
+    const x = [2, 1, -1, -2, -2, -1, 1, 2]
+    const y = [-1, 2, -2, -1, 1, 2, -2, 1]
+
+    for (let i = 0; i < x.length; i++) {
+        if (metrixPos[0][0] + x[i] <= 7 &&
+            metrixPos[0][0] + x[i] >= 0 &&
+            metrixPos[1][0] + y[i] <= 7 &&
+            metrixPos[1][0] + y[i] >= 0) {
+            board[currRow + x[i]][column + y[i]] = `${i}`
+            result.push([x[i], y[i]])
+        }
+    }
+    // see board
+    // console.table(board);
+    return result.length
+}
